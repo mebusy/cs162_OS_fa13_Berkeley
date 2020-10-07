@@ -11,3 +11,10 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 - [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
 
 
+## Homework 0
+
+[gdb](RMS's gdb Debugger Tutorial)
+
+## Four Fundamental Concepts of Operating Systems
+
+

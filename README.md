@@ -15,6 +15,8 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
 [gdb](RMS's gdb Debugger Tutorial)
 
-## Four Fundamental Concepts of Operating Systems
+## Lectures
+
+1. [Lecture 2 Four Fundamental OS Concepts](lecture/2_Four_Fundamental_OS_Concepts.md)
 
 

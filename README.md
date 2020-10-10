@@ -17,6 +17,18 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
 ## Lectures
 
-1. [Lecture 2 Four Fundamental OS Concepts](lecture/2_Four_Fundamental_OS_Concepts.md)
+1. [Lecture 2 Four Fundamental OS Concepts](lecture/2%20Four%20Fundamental%20Concepts%20of%20Operating%20Systems.pdf)
+    - Four Fundamental OS Concepts
+        1. **Thread**
+            - Threads are **virtual cores**.
+        2. **Address space**
+        3. **Process**
+        4. **Dual mode operation / Protection**
+    - Q: Do all threads get equal amount of time ?
+        - Yes, no, maybe. It dependds a lot on what you're trying to do. It's a scheduling problem.
+    - OS -> load program -> relocate
+    - where is kernel code/data in process ?
+        - unix: kernel space is mapped in high, but inaccessible to user processes.
+
 
 

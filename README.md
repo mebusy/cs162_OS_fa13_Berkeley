@@ -6,9 +6,10 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
     - [web fa2013](https://inst.eecs.berkeley.edu/~cs162/fa13/)
 
 - sp 2020
-- [viedo sp2020](https://www.youtube.com/watch?v=itfEcA3TXq4&list=PLIMsSuI81pxq7c91oQMpmXgmGICbuDA_c)
-- [video sp2020 yet another](https://www.youtube.com/watch?v=dTl9QkH4j8o&list=PL6CdojO56mZ3SeRfpzMBMObSnTziA0gfE)
-- [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
+    - [viedo sp2020](https://www.youtube.com/watch?v=itfEcA3TXq4&list=PLIMsSuI81pxq7c91oQMpmXgmGICbuDA_c)
+    - [video sp2020 yet another](https://www.youtube.com/watch?v=dTl9QkH4j8o&list=PL6CdojO56mZ3SeRfpzMBMObSnTziA0gfE)
+    - [video lecture 3](https://www.youtube.com/watch?v=Wj-Fvs7mMIQ&list=PL--jIyXjDXf6Q4XA6q8RYnyChYzJ0K0F2&index=3)
+    - [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
 
 
 ## Homework 0
@@ -27,8 +28,14 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
     - Q: Do all threads get equal amount of time ?
         - Yes, no, maybe. It dependds a lot on what you're trying to do. It's a scheduling problem.
     - OS -> load program -> relocate
-    - where is kernel code/data in process ?
+    - Q: Where is kernel code/data in process ?
         - unix: kernel space is mapped in high, but inaccessible to user processes.
+    - Q: Does kill the parent process killed the child ?
+        - No. The process family are tree structured. If a parent dies before the child oftentimes the child gets inherited by a the **init** process (with pid 1 ).
+    - Q: zombie process
+        - when a process dies, it will leave a data struct called zombie to wait its parenet process to finish relative information garthing.
+        - if the parent didn't invoide `wait()`, `waitpid()` to finish its work,  the zombie data will stay forever.
+
 
 
 

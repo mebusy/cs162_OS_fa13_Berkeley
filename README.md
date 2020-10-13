@@ -36,6 +36,12 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
         - when a process dies, it will leave a data struct called zombie to wait its parenet process to finish relative information garthing.
         - if the parent didn't invoide `wait()`, `waitpid()` to finish its work,  the zombie data will stay forever.
 
+2. [Lexture 3]()
 
+3. [Lexture 4]()
+    - **socket** is an abstraction of network I/O
+    - socket setup over TCP/IP
+        - server socket: Listens for new connection, and produces new sockets for each unique connection.
+        - that is, there is 3 sockets involved.
 
 

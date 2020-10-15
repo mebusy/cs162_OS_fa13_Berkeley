@@ -16,6 +16,24 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
 [gdb](RMS's gdb Debugger Tutorial)
 
+- C: to get the maximum number of process, file descriptors, and so on...
+    ```c
+    #include <sys/resource.h>
+    int getrlimit(int resource, struct rlimit *rlp);
+    ```
+    ```c
+    struct rlimit lim;
+
+    getrlimit( RLIMIT_STACK , &lim);
+    printf("stack size: %ld\n", lim.rlim_cur );
+
+    getrlimit( RLIMIT_NPROC , &lim);
+    printf("process limit: %ld\n", lim.rlim_cur);
+
+    getrlimit( RLIMIT_NOFILE , &lim);
+    printf("max file descriptors: %ld\n",  lim.rlim_cur);
+    ```
+
 ## Lectures
 
 1. [Lecture 2 Four Fundamental OS Concepts](lecture/2%20Four%20Fundamental%20Concepts%20of%20Operating%20Systems.pdf)

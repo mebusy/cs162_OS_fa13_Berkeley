@@ -147,5 +147,8 @@ SYMBOL TABLE:
     - socket setup over TCP/IP
         - server socket: Listens for new connection, and produces new sockets for each unique connection.
         - that is, there is 3 sockets involved.
+4. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
+    - all interrupts are asynchronous
+
 
 

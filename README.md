@@ -14,25 +14,111 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
 ## Homework 0
 
-[gdb](RMS's gdb Debugger Tutorial)
+[RMS's gdb Debugger Tutorial](http://www.unknownroad.com/rtfm/gdbtut/gdbtoc.html)
 
-- C: to get the maximum number of process, file descriptors, and so on...
-    ```c
-    #include <sys/resource.h>
-    int getrlimit(int resource, struct rlimit *rlp);
-    ```
-    ```c
-    struct rlimit lim;
+<details>
+<summary>
+GDP practice
+</summary>
 
-    getrlimit( RLIMIT_STACK , &lim);
-    printf("stack size: %ld\n", lim.rlim_cur );
+```gdb
+> gdb programname
+(gdb) break main
+(gdb) tbreak test.c:19 // temp break
+(gdb) run arg1 "arg2" ...
+(gdb) kill  // stop exec
+(gdb) next   // step over
+(gdb) x/s buf2  // examine variable
+0x602080:	""
+(gdb) disassemble
+Dump of assembler code for function recur:
+(gdb) si               // si/stepi , step into  machine instruction level
+0x00000000004005d3	9	        return recur(i - 1);
+(gdb) stepi
+(gdb) info registers
+rax            0x2	2
+rbx            0x0	0
+...
 
-    getrlimit( RLIMIT_NPROC , &lim);
-    printf("process limit: %ld\n", lim.rlim_cur);
+(gdb)info stack
+(gdb)tbreak recurse.c:3 if i==0
 
-    getrlimit( RLIMIT_NOFILE , &lim);
-    printf("max file descriptors: %ld\n",  lim.rlim_cur);
-    ```
+or
+
+(gdb) tbreak recurse.c:3
+(gdb) condition  2 i==0
+```
+</details>
+
+
+<details>
+<summary>
+C: to get the maximum number of process, file descriptors, and so on...
+</summary>
+
+```c
+#include <sys/resource.h>
+int getrlimit(int resource, struct rlimit *rlp);
+```
+
+```c
+struct rlimit lim;
+
+getrlimit( RLIMIT_STACK , &lim);
+printf("stack size: %ld\n", lim.rlim_cur );
+
+getrlimit( RLIMIT_NPROC , &lim);
+printf("process limit: %ld\n", lim.rlim_cur);
+
+getrlimit( RLIMIT_NOFILE , &lim);
+printf("max file descriptors: %ld\n",  lim.rlim_cur);
+```
+
+</details>
+
+- ELF (Executable and Linkable Format), the object format used by Linux
+    - `gcc -C `  -> assemble code
+    - `gcc -c `  -> obj code
+    - `objdump -D `  disassemble all 
+    - `objdump -t `  show symbol table 
+
+- [objdump symbol table](http://manpages.ubuntu.com/manpages/focal/en/man1/objdump.1.html)
+
+<details>
+<summary>
+Symbol Table Details
+</summary>
+
+```bash
+SYMBOL TABLE:
+00000000 l    df *ABS*	00000000 map.c
+00000000 l    d  .text	00000000 .text
+00000000 l    d  .data	00000000 .data
+00000000 l    d  .bss	00000000 .bss
+00000000 l    d  .note.GNU-stack	00000000 .note.GNU-stack
+00000000 l    d  .eh_frame	00000000 .eh_frame
+00000000 l    d  .comment	00000000 .comment
+00000004       O *COM*	00000004 foo
+00000000 g     O .data	00000004 stuff
+00000000 g     F .text	00000052 main
+00000000         *UND*	00000000 malloc
+00000000         *UND*	00000000 recur
+```
+
+- COLUMN ONE: the symbol's value
+- COLUMN TWO: a set of characters and spaces indicating the flag bits that are set on the symbol. There are seven groupings which are listed below:
+    - group one: (l,g,,!) local, global, neither, both.
+    - group two: (w,) weak or strong symbol.
+    - group three: (C,) symbol denotes a constructor or an ordinary symbol.
+    - group four: (W,) symbol is warning or normal symbol.
+    - group five: (I,) indirect reference to another symbol or normal symbol.
+    - group six: (d,D,) debugging symbol, dynamic symbol or normal symbol.
+    - group seven: (F,f,O,) symbol is the name of function, file, object or normal symbol.
+- COLUMN THREE: the section in which the symbol lives, ABS means not associated with a certain section
+- COLUMN FOUR: the symbol's size or alignment.
+- COLUMN FIVE: the symbol's name.
+
+</details>
 
 ## Lectures
 

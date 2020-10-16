@@ -149,6 +149,6 @@ SYMBOL TABLE:
         - that is, there is 3 sockets involved.
 4. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
     - all interrupts are asynchronous
-
+    - A executing interrupt may be interrupted by another high priority interrupt. So there got to be several levels of interrupt stack.
 
 

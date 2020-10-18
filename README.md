@@ -123,24 +123,54 @@ SYMBOL TABLE:
 ## Lectures
 
 1. [Lecture 2 Four Fundamental OS Concepts](lecture/2%20Four%20Fundamental%20Concepts%20of%20Operating%20Systems.pdf)
-    - Four Fundamental OS Concepts
+    - Four Fundamental OS Concepts(2.13)
         1. **Thread**
             - Threads are **virtual cores**.
+            - Contents of virtual core (thread):(2.20)
+                - PC,SP,registers
+            - Where is Thread ?(2.20)
+                - On the real (physical) core, or
+                - Saved in chunk of memory - called the Thread Control Block (TCB)
+            - **Each thread has its own TCB**.
+                - Processes start out with **a** single main **thread**. 
+                - The main **thread can** create new **threads** using a **thread fork** system call.
+                - The new **threads can** also use this system call to create more **threads**.
+            - How to switch threads?(2.21)
+                - Saved PC, SP, ... in A thread's control block (memory)
+                - Loaded PC, SP, ... from B's TCB, jumped to PC
         2. **Address space**
         3. **Process**
+            - protected environment with multiple threads
+            - code, data, files, ...
+            - Where is kernel code/data in process ?(2.41)
+                - unix: kernel space is mapped in high, but inaccessible to user processes.
+            - PCB
+                - Status (running, ready, blocked, ...)
+                - Register state (when not ready)
+                - Process ID (PID), User, Executable, Priority, ... 
+                - Execution time, ...
+                - Memory space, translation, ...
         4. **Dual mode operation / Protection**
+            - **user mode** -> syscall, interrupt, exception, exit -> **kernel mode**
+            - **kernel mode** -> rtn, rti, exec -> **user mode**
+    - OS Bottom Line: Run Programs(2.14)
+        1. Load instruction and data segments of executable file into memory
+        2. **Create stack and heap**
+        3. “Transfer control to program”
+        4. Provide services to program, While protecting OS and program
     - Q: Do all threads get equal amount of time ?
         - Yes, no, maybe. It dependds a lot on what you're trying to do. It's a scheduling problem.
     - OS -> load program -> relocate
-    - Q: Where is kernel code/data in process ?
-        - unix: kernel space is mapped in high, but inaccessible to user processes.
     - Q: Does kill the parent process killed the child ?
         - No. The process family are tree structured. If a parent dies before the child oftentimes the child gets inherited by a the **init** process (with pid 1 ).
     - Q: zombie process
         - when a process dies, it will leave a data struct called zombie to wait its parenet process to finish relative information garthing.
         - if the parent didn't invoide `wait()`, `waitpid()` to finish its work,  the zombie data will stay forever.
 
-2. [Lexture 3]()
+2. [Lexture 3 Process, syscall](lecture/3_Processes_cont_Fork_System Calls.pdf)
+    - Two-stack model (3.33)
+        - OS thread has interrupt stack (located in kernel memory) plus User stack (located in user memory)
+        - Syscall handler copies user args to kernel space before invoking specific function (e.g., open)
 
 3. [Lexture 4]()
     - **socket** is an abstraction of network I/O
@@ -150,5 +180,10 @@ SYMBOL TABLE:
 4. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
     - all interrupts are asynchronous
     - A executing interrupt may be interrupted by another high priority interrupt. So there got to be several levels of interrupt stack.
+    - **Kernel threads vs User Threads**
+        - User threads and Kernel threads are exactly the same
+        - A User thread is one that executes user-space code. But it can call into kernel space at any time. It's still considered a "User" thread, even though it's executing kernel code at elevated security levels.
+        - A Kernel thread is one that **ONLY** runs kernel code and isn't associated with a user-space process.
+        - In fact, all threads start off in kernel space, because the clone() operation happens in kernel space. (And there's lots of kernel accounting to do before you can 'return' to a new process in user space.)
 
 

@@ -84,6 +84,7 @@ printf("max file descriptors: %ld\n",  lim.rlim_cur);
 
 - [objdump symbol table](http://manpages.ubuntu.com/manpages/focal/en/man1/objdump.1.html)
 
+
 <details>
 <summary>
 Symbol Table Details
@@ -119,6 +120,69 @@ SYMBOL TABLE:
 - COLUMN FIVE: the symbol's name.
 
 </details>
+
+
+<details>
+<summary>
+<b>list_entry</b> macro: Converts pointer to list element LIST_ELEM into a pointer to the structure that LIST_ELEM is embedded inside
+</summary>
+
+```c
+#define list_entry(LIST_ELEM, STRUCT, MEMBER)           \
+        ((STRUCT *) ((uint8_t *) &(LIST_ELEM)->next     \
+                     - offsetof (STRUCT, MEMBER.next)))
+
+...
+
+     struct foo
+       {
+         struct list_elem elem;
+         int bar;
+         ...other members...
+       };
+
+    struct list foo_list;
+    list_init (&foo_list);      
+
+...
+                      
+ struct list_elem *e; 
+                      
+ for (e = list_begin (&foo_list); e != list_end (&foo_list);
+      e = list_next (e))                        
+   {                  
+     struct foo *f = list_entry (e, struct foo, elem);
+     ...do something with f...                  
+   }                  
+
+```
+
+`container_of` macro in linux kernel: [explain container_of](http://www.kroah.com/log/linux/container_of.html)
+
+```c
+#define container_of(ptr, type, member) ({                      \
+        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+        (type *)( (char *)__mptr - offsetof(type,member) );})
+```
+
+Taking this container for example:
+
+```c
+struct container {
+  int some_other_data;
+  int this_data;
+}
+```
+
+And a pointer int `*my_ptr` to the *this_data* member, you'd use the macro to get a pointer to `struct container *my_container` by using:
+
+```c
+struct container *my_container;
+my_container = container_of(my_ptr, struct container, this_data);
+```
+
+</details>
+
 
 ## Lectures
 

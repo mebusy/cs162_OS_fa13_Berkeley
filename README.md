@@ -186,7 +186,8 @@ my_container = container_of(my_ptr, struct container, this_data);
 
 ## Lectures
 
-1. [Lecture 2 Four Fundamental OS Concepts](lecture/2%20Four%20Fundamental%20Concepts%20of%20Operating%20Systems.pdf)
+1. TODO
+2. [Lecture 2 Four Fundamental OS Concepts](lecture/2%20Four%20Fundamental%20Concepts%20of%20Operating%20Systems.pdf)
     - Four Fundamental OS Concepts(2.13)
         1. **Thread**
             - Threads are **virtual cores**.
@@ -231,17 +232,17 @@ my_container = container_of(my_ptr, struct container, this_data);
         - when a process dies, it will leave a data struct called zombie to wait its parenet process to finish relative information garthing.
         - if the parent didn't invoide `wait()`, `waitpid()` to finish its work,  the zombie data will stay forever.
 
-2. [Lexture 3 Process, syscall](lecture/3_Processes_cont_Fork_System Calls.pdf)
+3. [Lexture 3 Process, syscall](lecture/3_Processes_cont_Fork_System%20Calls.pdf)
     - Two-stack model (3.33)
         - OS thread has interrupt stack (located in kernel memory) plus User stack (located in user memory)
         - Syscall handler copies user args to kernel space before invoking specific function (e.g., open)
 
-3. [Lexture 4]()
+4. [Lexture 4]()
     - **socket** is an abstraction of network I/O
     - socket setup over TCP/IP
         - server socket: Listens for new connection, and produces new sockets for each unique connection.
         - that is, there is 3 sockets involved.
-4. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
+5. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
     - all interrupts are asynchronous
     - A executing interrupt may be interrupted by another high priority interrupt. So there got to be several levels of interrupt stack.
     - **Kernel threads vs User Threads**
@@ -249,5 +250,18 @@ my_container = container_of(my_ptr, struct container, this_data);
         - A User thread is one that executes user-space code. But it can call into kernel space at any time. It's still considered a "User" thread, even though it's executing kernel code at elevated security levels.
         - A Kernel thread is one that **ONLY** runs kernel code and isn't associated with a user-space process.
         - In fact, all threads start off in kernel space, because the clone() operation happens in kernel space. (And there's lots of kernel accounting to do before you can 'return' to a new process in user space.)
+6. TODO
+    - User-Mode Threads
+        - also called green thread
+        - User program provides scheduler and htread package
+        - May have serveral user threads per kernel thread
+        - User threads may be scheduled non-preemptively (only switch on yield())
+        - Cheap
+    - Downside of user threads
+        - When one thread blocks on I/O, all threads block
+            - because I/O puts the kernel thread to sleep
+        - Kernel cannot adjust scheduling among all threads
+        - Option: Scheduler Activations
+            - somehow, when you go into the kernel and go to sleep, the kernel is wise enough to pass up another kernel thread for you to use.
 
 

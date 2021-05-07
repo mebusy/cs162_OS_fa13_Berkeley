@@ -237,12 +237,12 @@ my_container = container_of(my_ptr, struct container, this_data);
         - OS thread has interrupt stack (located in kernel memory) plus User stack (located in user memory)
         - Syscall handler copies user args to kernel space before invoking specific function (e.g., open)
 
-4. [Lexture 4]()
+4. [Lexture 4 Processes_cont_Threads_Concurrency](lecture/4_Processes_cont_Threads_Concurrency.pdf)
     - **socket** is an abstraction of network I/O
     - socket setup over TCP/IP
         - server socket: Listens for new connection, and produces new sockets for each unique connection.
         - that is, there is 3 sockets involved.
-5. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
+5. [Lecture 5 Concurrency and Mutual Exclusion](lecture/5_Concurrency.pdf)
     - all interrupts are asynchronous
     - A executing interrupt may be interrupted by another high priority interrupt. So there got to be several levels of interrupt stack.
     - **Kernel threads vs User Threads**
@@ -250,7 +250,7 @@ my_container = container_of(my_ptr, struct container, this_data);
         - A User thread is one that executes user-space code. But it can call into kernel space at any time. It's still considered a "User" thread, even though it's executing kernel code at elevated security levels.
         - A Kernel thread is one that **ONLY** runs kernel code and isn't associated with a user-space process.
         - In fact, all threads start off in kernel space, because the clone() operation happens in kernel space. (And there's lots of kernel accounting to do before you can 'return' to a new process in user space.)
-6. TODO
+6. [6 Synchronization_locks_Semaphores](lecture/6_Synchronization_locks_Semaphores.pdf)
     - User-Mode Threads
         - also called green thread
         - User program provides scheduler and htread package
@@ -264,4 +264,5 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Option: Scheduler Activations
             - somehow, when you go into the kernel and go to sleep, the kernel is wise enough to pass up another kernel thread for you to use.
 
+7. [7 7_Semaphores_Monitors_ReadersWriters](lecture/7_Semaphores_Monitors_ReadersWriters.pdf)
 

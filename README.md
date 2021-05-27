@@ -237,12 +237,12 @@ my_container = container_of(my_ptr, struct container, this_data);
         - OS thread has interrupt stack (located in kernel memory) plus User stack (located in user memory)
         - Syscall handler copies user args to kernel space before invoking specific function (e.g., open)
 
-4. [Lexture 4]()
+4. [Lexture 4 Processes_cont_Threads_Concurrency](lecture/4_Processes_cont_Threads_Concurrency.pdf)
     - **socket** is an abstraction of network I/O
     - socket setup over TCP/IP
         - server socket: Listens for new connection, and produces new sockets for each unique connection.
         - that is, there is 3 sockets involved.
-5. [Lecture 5 Concurrency](lecture/5_Concurrency.pdf)
+5. [Lecture 5 Concurrency and Mutual Exclusion](lecture/5_Concurrency.pdf)
     - all interrupts are asynchronous
     - A executing interrupt may be interrupted by another high priority interrupt. So there got to be several levels of interrupt stack.
     - **Kernel threads vs User Threads**
@@ -259,7 +259,7 @@ my_container = container_of(my_ptr, struct container, this_data);
     - we're going to implement various higher-level synchronization primitives using atomic operations
         - everything is painful if only atomic primitives are load and store
         - need to provide primitives useful at user-level
-6. TODO
+6. [6 Synchronization_locks_Semaphores](lecture/6_Synchronization_locks_Semaphores.pdf)
     - User-Mode Threads
         - also called green thread
         - User program provides scheduler and htread package
@@ -273,4 +273,5 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Option: Scheduler Activations
             - somehow, when you go into the kernel and go to sleep, the kernel is wise enough to pass up another kernel thread for you to use.
 
+7. [7 7_Semaphores_Monitors_ReadersWriters](lecture/7_Semaphores_Monitors_ReadersWriters.pdf)
 

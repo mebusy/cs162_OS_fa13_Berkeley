@@ -250,6 +250,15 @@ my_container = container_of(my_ptr, struct container, this_data);
         - A User thread is one that executes user-space code. But it can call into kernel space at any time. It's still considered a "User" thread, even though it's executing kernel code at elevated security levels.
         - A Kernel thread is one that **ONLY** runs kernel code and isn't associated with a user-space process.
         - In fact, all threads start off in kernel space, because the clone() operation happens in kernel space. (And there's lots of kernel accounting to do before you can 'return' to a new process in user space.)
+    - Where are we going with synchronization?
+        Where | What
+        --- | ---
+        Programs |  Shared Programs
+        Higher-level API | Locks, Semaphores, Monitors, Send/Receive
+        Hardware | Load/Store, Disalbe Ints, Test`&`Set, Compare`&`Swap
+    - we're going to implement various higher-level synchronization primitives using atomic operations
+        - everything is painful if only atomic primitives are load and store
+        - need to provide primitives useful at user-level
 6. TODO
     - User-Mode Threads
         - also called green thread

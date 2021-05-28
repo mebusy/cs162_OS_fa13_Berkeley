@@ -318,6 +318,9 @@ my_container = container_of(my_ptr, struct container, this_data);
         }
         ```
         - **Busy-Waiting**: thread consumes cycles while waiting
+            - For multiprocessors: every test&set() is a write, which makes value ping-pong around in cache (using lots of network BW)
+        - Can we build test&set locks without busy-waiting?
+            - Can’t entirely, but can minimize!
 
 7. [7 7_Semaphores_Monitors_ReadersWriters](lecture/7_Semaphores_Monitors_ReadersWriters.pdf)
 

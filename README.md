@@ -250,16 +250,6 @@ my_container = container_of(my_ptr, struct container, this_data);
         - A User thread is one that executes user-space code. But it can call into kernel space at any time. It's still considered a "User" thread, even though it's executing kernel code at elevated security levels.
         - A Kernel thread is one that **ONLY** runs kernel code and isn't associated with a user-space process.
         - In fact, all threads start off in kernel space, because the clone() operation happens in kernel space. (And there's lots of kernel accounting to do before you can 'return' to a new process in user space.)
-    - Where are we going with synchronization?
-        Where | What
-        --- | ---
-        Programs |  Shared Programs
-        Higher-level API | Locks, Semaphores, Monitors, Send/Receive
-        Hardware | Load/Store, Disalbe Ints, Test`&`Set, Compare`&`Swap
-    - we're going to implement various higher-level synchronization primitives using atomic operations
-        - everything is painful if only atomic primitives are load and store
-        - need to provide primitives useful at user-level
-6. [6 Synchronization_locks_Semaphores](lecture/6_Synchronization_locks_Semaphores.pdf)
     - User-Mode Threads
         - also called green thread
         - User program provides scheduler and htread package
@@ -272,6 +262,62 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Kernel cannot adjust scheduling among all threads
         - Option: Scheduler Activations
             - somehow, when you go into the kernel and go to sleep, the kernel is wise enough to pass up another kernel thread for you to use.
+6. [6 Synchronization_locks_Semaphores](lecture/6_Synchronization_locks_Semaphores.pdf)
+    - **Where** are we going with **synchronization**?
+        Where | What
+        --- | ---
+        Programs |  Shared Programs
+        Higher-level API | Locks, Semaphores, Monitors, Send/Receive
+        Hardware | Load/Store, Disalbe Ints, Test`&`Set(most architecture), Compare`&`Swap
+    - we're going to implement various higher-level synchronization primitives using atomic operations
+        - everything is painful if only atomic primitives are load and store
+        - need to provide primitives useful at user-level
+    - Atomic Read-Modify-Write Instructions
+        - atomic instruction sequences
+        - These instructions read a value and write a new value atomically
+        - Hardware is responsible for implementing this correctly
+    - Examples of Read-Modify-Write
+        ```c
+        test&set (&address) {       /* most architectures */
+            result = M[address];    // return result from “address” and    
+            M[address] = 1;         // set value at “address” to 1
+            return result;
+        }
+        compare&swap (&address, reg1, reg2) {   /* 68000 */
+            if (reg1 == M[address]) {   // If memory still == reg1,
+                M[address] = reg2;      // then  put reg2 => memory
+                return success;
+            } else {                    // Otherwise do not change memory
+                return failure;
+            }
+        }
+        ```
+        - Each has different usage scenarios
+    - Using of Compare&Swap for **queues**
+        - Here is an atomic add to linked-list function
+        ```c
+        addToQueue(&object) {
+            do {                //repeat until no conflict
+                ld r1, M[root]  // Get ptr to current head
+                st r1, M[object]  // Store the head of list into new object
+            } until (compare&swap(&root,r1,object)); // unitl head pt is still pointing at the old guy
+                                                     //   we quickly swap it in.
+        }
+        ```
+        - ![](imgs/cs162_os_add2queue_swap.png)
+            - the solid line from `New Object` to the 1st elment is what the `do` body done
+            - the dotted line from root to `New Object` is compare&swap
+    - Implementing **Locks** with test&set
+        ```c
+        int value = 0; // Free
+        Acquire() {
+           while (test&set(value)); // while busy
+        }
+        Release() {
+            value = 0;
+        }
+        ```
+        - **Busy-Waiting**: thread consumes cycles while waiting
 
 7. [7 7_Semaphores_Monitors_ReadersWriters](lecture/7_Semaphores_Monitors_ReadersWriters.pdf)
 

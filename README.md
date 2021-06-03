@@ -398,6 +398,7 @@ my_container = container_of(my_ptr, struct container, this_data);
                 - **Signal()**: wake up one waiter on the condition variable, if any
                 - **Broadcast()**: wake up all waiters on the conditon variable
             - Rule: MUST hold lock when doing condition variable ops!
+            - `sync.Cond` in golang
         - **Lock**: the lock provides mutual exclusion to shared data
             - Always acquire before accessing shared data structure
             - Always release after finishing with shared data

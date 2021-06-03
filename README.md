@@ -323,4 +323,138 @@ my_container = container_of(my_ptr, struct container, this_data);
             - Can’t entirely, but can minimize!
 
 7. [7 7_Semaphores_Monitors_ReadersWriters](lecture/7_Semaphores_Monitors_ReadersWriters.pdf)
+    - Semaphores
+        - can be initialized as a non-negative integer
+        - 2 operations:
+            - P(): wait if zero; decrement when non-zero, 
+                - P stands for 'proberen'(DUTCH) 尝试
+            - V(): increment and wake a sleeping task(if exists)
+                - V stands for 'verhogen'(DUTCH) 增加
+        - from railway analogy
+        - **Mutual Exclusion (initial value = 1)**
+            - Also called "Binary Semaphore"
+            - exactly behaving like locks that we talked about
+            ```c
+            semaphore.P();
+            // Critical section goes here
+            semaphore.V();
+            ```
+            - something like `sync.Mutex` in GO
+        - **Scheduling Constraints (initial value = 0)**
+            - allow thread 1 to wait for a signal from thread 2 
+                - thread 2 **schedules** thread 1 when a given **event** occurs
+                - it says, well, until some resource becomes available, we are able to sleep on this semaphore.
+            ```c
+            // example: suppose you had to implement ThreadJoin which must wait for thread to terminate
+            Initial value of semaphore = 0
+            ThreadJoin {
+                semaphore.P(); // e.g. parent thread sleep
+            }
+            ThreadFinish {
+                semaphore.V(); // e.g. child thread finish
+            }
+            ```
+            - something like `channel` in GO
+        - **Bounded Buffer implemented by Semaphores**
+            ```c
+            Semaphore fullSlots = 0; // Initially, no coke
+            Semaphore emptySlots = bufSize; // Initially, num empty slots 
+            Semaphore mutex = 1; // No one using machine
+
+            Producer(item) {
+                emptySlots.P();  // 1 Wait until space
+                mutex.P();   // 2 Wait until machine free
+                Enqueue(item);
+                mutex.V();
+                fullSlots.V(); // Tell consumers there is more cok
+            }
+            Consumer() {
+                fullSlots.P(); // 1 Check if there’s a coke
+                mutex.P();   // 2 Wait until machine free
+                item = Dequeue(); 
+                mutex.V();
+                emptySlots.V();  // tell producer need more
+                return item;
+            }
+            ```
+        - Problem is that semaphores are dual purpose.
+            - used for both mutex and scheduling constraints
+            - the order of P's (statement 1 and 2 ) is important, exchanging them will cause deadlock. How do you prove correctness to someone?
+        - Cleaner idea: use `lock` for mutual exclusion and `condition variables` for scheduling constraints.
+    - Monitor (better than semaphore)
+        - a **lock** and 0 or more **condition variables** for managing concurrent access to shared data
+            - some languages like Java provide this natively
+            - Most others use actual locks and condition variables
+        - paradigm for concurrent programming !
+        - Q: how do we change the consumer() routine to wait until something is on the queue ?
+            - we could do this by keeping a count of the number of items on the queue(with semaphores), but error prone.
+        - **Condition Variables**: a queue of **threads** waiting for something **inside** a critical section
+            - key idea: allow **sleeping inside** critical section by **atomically release lock** at time we go to sleep.
+            - CONTRAST to semaphores: semaphores can't wait inside critical section because you can not sleep with a lock (will cause deadlock)
+                - But condition variables are very special items whose explicit use pattern is to sleep inside a critical section.
+            - Operations:
+                - **Wait(&lock)**: Atomically release lock and go to sleep.
+                    - Re-acquire lock later, before returning
+                - **Signal()**: wake up one waiter on the condition variable, if any
+                - **Broadcast()**: wake up all waiters on the conditon variable
+            - Rule: MUST hold lock when doing condition variable ops!
+        - **Lock**: the lock provides mutual exclusion to shared data
+            - Always acquire before accessing shared data structure
+            - Always release after finishing with shared data
+            - Lock initially free
+        - Here is an (infinite) synchronized queue:
+            ```c
+            lock buf_lock; // Initially unlocked
+            condition buf_CV; // Initially empty
+            queue queue;
+
+            Producer(item) {
+                acquire(&buf_lock); // Get Lock
+                enqueue(&queue,item); // Add item
+                cond_signal(&buf_CV); // * Signal any waiters
+                release(&buf_lock);   // Release Lock
+            }
+
+            Consumer() {
+                acquire(&buf_lock);  // Get Lock
+
+                // don't think about there ever being a point in which 
+                //   you interacts without the lock at that point
+                // nobody can be inside this critical section while I am.
+
+                // why while loop ?
+                //   when a thread is woken up by signal(), it is simply put on the ready queue
+                //   another thread could be scheduled first and 'sneak in'
+                //   need a loop to re-check condition on wakeup
+                while (isEmpty(&queue)) {
+                    cond_wait(&buf_CV, &buf_lock); // * If empty, sleep
+                }
+                item = dequeue(&queue);  // et next item
+                release(&buf_lock);  // Release Lock
+                return(item);
+            }
+            ```
+        - Circular Buffer (Monitors, pthread-like)
+            ```c
+            lock buf_lock = <initially unlocked> 
+            condition producer_CV = <initially empty> 
+            condition consumer_CV = <initially empty>
+
+            Producer(item) {
+                acquire(&buf_lock);
+                while (buffer full) { cond_wait(&producer_CV, &buf_lock); }
+                enqueue(item);
+                cond_signal(&consumer_CV);
+                release(&buf_lock);
+            }
+
+            Consumer() {
+                acquire(buf_lock);
+                while (buffer empty) { cond_wait(&consumer_CV, &buf_lock); }
+                item = dequeue();
+                cond_signal(&producer_CV);
+                release(&buf_lock);
+                return item;
+            }
+            ```
 

@@ -7,8 +7,9 @@ Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
 - sp 2020
     - [viedo sp2020](https://www.youtube.com/watch?v=itfEcA3TXq4&list=PLIMsSuI81pxq7c91oQMpmXgmGICbuDA_c)
-    - [video sp2020 yet another](https://www.youtube.com/watch?v=dTl9QkH4j8o&list=PL6CdojO56mZ3SeRfpzMBMObSnTziA0gfE)
+    - [video sp2020 yet another 7&14+](https://www.youtube.com/watch?v=dTl9QkH4j8o&list=PL6CdojO56mZ3SeRfpzMBMObSnTziA0gfE)
     - [video lecture 3](https://www.youtube.com/watch?v=Wj-Fvs7mMIQ&list=PL--jIyXjDXf6Q4XA6q8RYnyChYzJ0K0F2&index=3)
+    - [video lecture 8 I/O, sockets, networking](https://www.youtube.com/watch?v=gxBvkr5JrXs&list=PL--jIyXjDXf6Q4XA6q8RYnyChYzJ0K0F2&index=4)
     - [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
 
 
@@ -458,4 +459,33 @@ my_container = container_of(my_ptr, struct container, this_data);
                 return item;
             }
             ```
+    - Readers/Writers Problem
+        - it's going to show the real power of the monitor programming paradigm.
+        - using a single mutex lock is not efficient when there are many readers and less writers
+        - Correctness Constraints:
+            - Readers can access database when no writers
+            - Writers can access database when no readers or writers
+            - Only one thread manipulates state variables at a time
+                - the state variables  are policy variables, they're the things that are going to be protected by the monitor lock.
+        - `sync.RWMutex` in golang
+    - Basic Monitor Structure
+        ```c
+        lock
+        while (need to wait) {  // check and/or update state variables
+            condvar.wait();     // wait if necessory
+        }
+        unlock
+
+        do something so no need to wait
+
+        lock
+        condvar.signal(); // check and/or update state vars
+        unlock
+        ```
+8. [Introduction to I/O Sockets Networking](lecture/8_Introduction_2_IO_Sockets_Networking.pdf)
+    - kernel buffered reads/writes
+        - always keep in mind when I write some data to a file it may still be memory in the kernel and not on disk.  So did a write system call doesn;t mean the data is permanent and you have to make sure that you do the right soft of flushing and syncing to make this work.
+9. [Sockets Networking Con't](lecture/9_Sockets_Networking_Cont.pdf)
+
+
 

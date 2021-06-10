@@ -484,7 +484,25 @@ my_container = container_of(my_ptr, struct container, this_data);
         ```
 8. [Introduction to I/O Sockets Networking](lecture/8_Introduction_2_IO_Sockets_Networking.pdf)
     - kernel buffered reads/writes
-        - always keep in mind when I write some data to a file it may still be memory in the kernel and not on disk.  So did a write system call doesn;t mean the data is permanent and you have to make sure that you do the right soft of flushing and syncing to make this work.
+        - always keep in mind when I write some data to a file it may still be memory in the kernel and not on disk.  So did a write system call doesn't mean the data is permanent and you have to make sure that you do the right soft of flushing and syncing to make this work.
+        - `fflush()` flushes user mode buffers to the OS. 
+        - `fsync()` flushes the OS buffers to disk. It would be prudent to do both (if performance is acceptable)
+    - What's below the surface ?
+        Applicaiton | Services | c 
+        --- | ---  | --- 
+        High Level I/O | streams | fopen/fclose/..., library call
+        Low Level I/O  | handles | open/creat/close/read/write/sync/..., actually system calls
+        Syscal | registers | [linux syscall reference](http://eds000n.github.io/syscalls-x86_64.html)
+        File System |  descriptors | 
+        I/O Driver | Commands and Data transfers | 
+        · |  Disk, Flash, Controllers, DMA |
+    - The **file descriptor space** is unique for **process**.
+    - Life Cycle of An I/O Request
+        - User Program
+        - Kernel I/O Sybsystem
+        - Device Driver Top Half
+        - Device Driver Bottom Half
+        - Device Hardward
 9. [Sockets Networking Con't](lecture/9_Sockets_Networking_Cont.pdf)
 
 

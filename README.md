@@ -1,17 +1,15 @@
 # cs162_OS_fa13_Berkeley
 Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
 
-- fa 2013
-    - [video fa13](https://www.youtube.com/watch?v=hry_qqXLej8&list=PLRdybCcWDFzCag9A0h1m9QYaujD0xefgM)
-    - [web fa2013](https://inst.eecs.berkeley.edu/~cs162/fa13/)
 
-- sp 2020
+- [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
     - [viedo sp2020](https://www.youtube.com/watch?v=itfEcA3TXq4&list=PLIMsSuI81pxq7c91oQMpmXgmGICbuDA_c)
     - [video sp2020 yet another 7&14+](https://www.youtube.com/watch?v=dTl9QkH4j8o&list=PL6CdojO56mZ3SeRfpzMBMObSnTziA0gfE)
     - [video lecture 3](https://www.youtube.com/watch?v=Wj-Fvs7mMIQ&list=PL--jIyXjDXf6Q4XA6q8RYnyChYzJ0K0F2&index=3)
     - [video lecture 8 I/O, sockets, networking](https://www.youtube.com/watch?v=gxBvkr5JrXs&list=PL--jIyXjDXf6Q4XA6q8RYnyChYzJ0K0F2&index=4)
-    - [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
 
+- [web fa2013](https://inst.eecs.berkeley.edu/~cs162/fa13/)
+    - [video fa13](https://www.youtube.com/watch?v=hry_qqXLej8&list=PLRdybCcWDFzCag9A0h1m9QYaujD0xefgM)
 
 ## Homework 0
 
@@ -232,6 +230,10 @@ my_container = container_of(my_ptr, struct container, this_data);
     - Q: zombie process
         - when a process dies, it will leave a data struct called zombie to wait its parenet process to finish relative information garthing.
         - if the parent didn't invoide `wait()`, `waitpid()` to finish its work,  the zombie data will stay forever.
+        - how 2 solve?
+            ```c
+            signal(SIGCHLD, SIG_IGN);  // prevent zombie children
+            ```
 
 3. [Lexture 3 Process, syscall](lecture/3_Processes_cont_Fork_System%20Calls.pdf)
     - Two-stack model (3.33)
@@ -504,6 +506,8 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Device Driver Bottom Half
         - Device Hardward
 9. [Sockets Networking Con't](lecture/9_Sockets_Networking_Cont.pdf)
+10. [Schedule Con't](lecture/10_schedule_cont.pdf)
+11. [Scheduling(finish), Deadlock](lecture/11_scheduling_finish_Deadlock.pdf)
 
 
 

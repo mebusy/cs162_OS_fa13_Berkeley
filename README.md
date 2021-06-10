@@ -1,6 +1,6 @@
-# cs162_OS_fa13_Berkeley
-Berkeley CS 162 Operating System, Fall 2013, UC Berkeley
+# CS162 OS Sp20 Berkeley
 
+Berkeley CS 162 Operating System, Spring 2020
 
 - [web sp2020](https://inst.eecs.berkeley.edu/~cs162/sp20/)
     - [viedo sp2020](https://www.youtube.com/watch?v=itfEcA3TXq4&list=PLIMsSuI81pxq7c91oQMpmXgmGICbuDA_c)

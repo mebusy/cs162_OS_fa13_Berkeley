@@ -507,7 +507,30 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Device Hardward
 9. [Sockets Networking Con't](lecture/9_Sockets_Networking_Cont.pdf)
 10. [Schedule Con't](lecture/10_schedule_cont.pdf)
-11. [Scheduling(finish), Deadlock](lecture/11_scheduling_finish_Deadlock.pdf)
+    - FIFO / RR
+        - short tasks really do get moved around based on scheduling, while the long ones don't really care based on scheduling.
+        - the lesson for that is, maybe if we gave some preference to the short ones, we would get more responsiveness without really interrupting the long ones.
+    - Strict Priority Scheduling: always execute highest-priority runable jobs to completion
+        - problmes: 
+            - sartvation
+            - deadlock: Priority Inversion
+                - Not strictly a problem with priority scheduling, but happens when low priority task has lock needed by high-priority task.
+                - Usually involves third, intermediate priority task that keeps running even though high-priority task should be running
+                    - a high priority one trying to grab the lock, a low priority one has the lock, and then somebody in the middle shows up and they just run, and compute π.
+        - how to fix problems?
+            - dynamic priority
+                - on longer do pure priority-based things.
+                - adjust base-level priority up or down based on heuristics about interactivity, locking, burst behavior, etc...
+    - Linux Completely Fair Scheduler (CFS)
+        - “CFS doesn't track sleeping time and doesn't use heuristics to identify interactive tasks—it just makes sure every process gets a fair share of CPU within a set amount of time given the number of runnable processes on the CPU.”
+        - Inspired by Networking “Fair Queueing”
+            - Each process given their fair share of resources
+            - Models an “ideal multitasking processor” in which N processes execute simultaneously as if they truly got 1/N of the processor
+                - Tries to give each process an equal fraction of the processor
+            - Priorities reflected by weights such that increasing a task’s priority by 1 always gives the same fractional increase in CPU time – regardless of current priority.
+        - Idea: track amount of “virtual time” received by each process when it is executing ( details in PDF )
+
+11. [Scheduling(finish),Deadlock,Address Translation](lecture/11_scheduling_finish_Deadlock.pdf)
 
 
 

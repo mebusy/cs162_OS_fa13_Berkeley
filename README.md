@@ -531,6 +531,56 @@ my_container = container_of(my_ptr, struct container, this_data);
         - Idea: track amount of “virtual time” received by each process when it is executing ( details in PDF )
 
 11. [Scheduling(finish),Deadlock,Address Translation](lecture/11_scheduling_finish_Deadlock.pdf)
+    - Techniques for Preventing Deadlock
+        - Make all threads request everything they’ll need at the beginning.
+            - Problem: Predicting future is hard, tend to over-estimate resources
+        - Force all threads to request resources in a **particular order** preventing any cyclic use of resources
+    - Banker’s Algorithm for Avoiding Deadlock
+        - Toward right idea:
+            - State maximum (max) resource needs in advance
+            - Allow particular thread to proceed if:
+                - (available resources - #requested) >= max remaining that might be needed by any thread
+        - Banker’s algorithm (less conservative):
+            - Allocate resources dynamically
+                - Evaluate each request and grant if some ordering of threads is still deadlock free afterward
+                - **Technique: pretend each request is granted, then run deadlock detection algorithm, substituting**
+                    - (Max<sub>node</sub> - Alloc<sub>node</sub> ≤ Avail)  for ( Request<sub>node</sub> ≤ Avail )
+                    - **Grant request if result is deadlock free (conservative!)**
+    - Banker’s algorithm with dining lawyers
+        - “Safe” (won’t cause deadlock) if when try to grab chopstick either:
+            - Not last chopstick
+            - Is last chopstick but someone will have two afterwards
+        - What if k-handed lawyers? Don’t allow if:
+            - It’s the last one, no one would have k
+            - It’s 2nd to last, and no one would have k-1
+            - It’s 3rd to last, and no one would have k-2
+            - ...
+12. [Address Translation](lecture/12_Address_Translation.pdf)
+    - What happens when processor reads or writes to an address?
+        - Perhaps acts like regular memory 
+        - Perhaps causes I/O operation
+            - (Memory-mapped I/O)
+            - certain ranges of addresses actually go off the bus and go out to I/O.
+        - Causes program to abort (segfault) ?
+            - you mark certain parts of the page table as read only, and when you write to it, it aborts.
+        - Communicate with another program
+        - ...
+    - Physical Reality: Different Processes/Threads share the same hardware
+        - Need to multiplex CPU (Just finished: scheduling) 
+        - Need to multiplex use of Memory (starting today) 
+        -  Need to multiplex disk and devices (later in term) 
+    - Why worry about memory sharing?
+        - The complete working state of a process and/or kernel is defined by its data in memory (and registers)
+        - Consequently, cannot just let different threads of control use the same memory
+            - Physics: two different pieces of data cannot occupy the same locations in memory
+        - Probably don’t want different threads to even have access to each other’s memory if in different processes (protection)
+    - Recall: Single and Multithreaded Processes
+        - Threads encapsulate concurrency
+            - “Active” component of a process
+        - Address spaces encapsulate protection
+            - Keeps buggy program from trashing the system
+            - “Passive” component of a process
+
 
 
 

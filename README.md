@@ -583,6 +583,7 @@ my_container = container_of(my_ptr, struct container, this_data);
 13. [Address Translation Con't, Caching, TLBs](lecture/13_AddressTranslationCont_Caching_TLBs.pdf)
     - TLB: Translation Look-Aside Buffer
 14. [Caching and TLBs (Finished), Demand Paging](lecture/14_Caching_TLBs_fin_Demand_Paging.pdf)
+    - Demaind Paging is a type of caching...
 15. [Demain Paging](lecture/15_Demand_Paging.pdf)
 16. [Demond Paging(finish), General I/O](lecture/16_Demand_Paging_fin_General_IO.pdf)
 

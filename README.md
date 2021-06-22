@@ -586,6 +586,9 @@ my_container = container_of(my_ptr, struct container, this_data);
     - Demaind Paging is a type of caching...
 15. [Demain Paging](lecture/15_Demand_Paging.pdf)
 16. [Demond Paging(finish), General I/O](lecture/16_Demand_Paging_fin_General_IO.pdf)
+17. [Performance, Storage Devices, Queueing Theory](lecture/17_performance_storage_dev_queue.pdf)
+18. [Queueing Theory(Con't), Disk Scheduling, FileSystems](lecture/18_queue_fin_diskschedule_filesystem.pdf)
+
 
 
 

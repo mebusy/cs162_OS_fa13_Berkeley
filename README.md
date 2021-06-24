@@ -588,6 +588,10 @@ my_container = container_of(my_ptr, struct container, this_data);
 16. [Demond Paging(finish), General I/O](lecture/16_Demand_Paging_fin_General_IO.pdf)
 17. [Performance, Storage Devices, Queueing Theory](lecture/17_performance_storage_dev_queue.pdf)
 18. [Queueing Theory(Con't), Disk Scheduling, FileSystems](lecture/18_queue_fin_diskschedule_filesystem.pdf)
+19. [File Systems (Con’t), MMAP, Buffer Cache](lecture/19_FileSystemsCont_MMAP_BufferCache.pdf)
+20. [Filesystems (Con’t) Reliability, Transactions](lecture/20_FilesystemsCont_Reliability_Transactions.pdf)
+21. [Filesystem Transactions (Con’t), End-to-End Argument, Distributed Decision Making](lecture/21_Filesystem_TransactionsCont_End-to-End-Argument_DistributedDecisionMaking.pdf)
+
 
 
 

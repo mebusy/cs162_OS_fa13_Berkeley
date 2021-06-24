@@ -592,6 +592,15 @@ my_container = container_of(my_ptr, struct container, this_data);
 20. [Filesystems (Con’t) Reliability, Transactions](lecture/20_FilesystemsCont_Reliability_Transactions.pdf)
 21. [Filesystem Transactions (Con’t), End-to-End Argument, Distributed Decision Making](lecture/21_Filesystem_TransactionsCont_End-to-End-Argument_DistributedDecisionMaking.pdf)
 22. [Distributed Decision Making (Finished), TCP/IP Networking, RPC](lecture/22_DistributedDecisionMakingFin_TCPIPNetworking_RPC.pdf)
+    - General Paradox
+        - 2PC: two Phase commit
+    - Byzantine General's Problem ( n players)
+        - One General and n-1 Lieutenants
+        - Some number of these(f) can be insane or malicious
+        - Impossibility Results
+            - Cannot solve Byzantine General's Problem with n=3 because one malicious player can mess up things.
+            - with f faults , need n > 3f to solve problem.
+
 23. [Networking (Con’t), Distributed File Systems, Key-Value stores](lecture/23_NetworkingCont_DistributedFileSystems_KeyValueStores.pdf)
 24. [Distributed Storage, Key Value Stores, Chord](lecture/24_DistributedStorage_KeyValueStores_Chord.pdf)
 

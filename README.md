@@ -591,8 +591,9 @@ my_container = container_of(my_ptr, struct container, this_data);
 19. [File Systems (Con’t), MMAP, Buffer Cache](lecture/19_FileSystemsCont_MMAP_BufferCache.pdf)
 20. [Filesystems (Con’t) Reliability, Transactions](lecture/20_FilesystemsCont_Reliability_Transactions.pdf)
 21. [Filesystem Transactions (Con’t), End-to-End Argument, Distributed Decision Making](lecture/21_Filesystem_TransactionsCont_End-to-End-Argument_DistributedDecisionMaking.pdf)
-
-
+22. [Distributed Decision Making (Finished), TCP/IP Networking, RPC](lecture/22_DistributedDecisionMakingFin_TCPIPNetworking_RPC.pdf)
+23. [Networking (Con’t), Distributed File Systems, Key-Value stores](lecture/23_NetworkingCont_DistributedFileSystems_KeyValueStores.pdf)
+24. [Distributed Storage, Key Value Stores, Chord](lecture/24_DistributedStorage_KeyValueStores_Chord.pdf)
 
 
 

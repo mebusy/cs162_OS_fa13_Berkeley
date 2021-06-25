@@ -602,6 +602,18 @@ my_container = container_of(my_ptr, struct container, this_data);
             - with f faults , need n > 3f to solve problem.
 
 23. [Networking (Con’t), Distributed File Systems, Key-Value stores](lecture/23_NetworkingCont_DistributedFileSystems_KeyValueStores.pdf)
+    - CAP Theorem
+        - Consistency: 
+            - Changes appear to everyone in the same serial order
+            - when one client does a write, when does it appear to the other clients ? 
+        - Availability
+            - Can get a result at any time
+            - service availability, storage availability
+        - Partition-Tolerance
+            - System continues to work even when network becomes partitioned
+    - CAP: Cannot have all three at same time !
+        - Otherwise known as "Brewer's Theorem"
+
 24. [Distributed Storage, Key Value Stores, Chord](lecture/24_DistributedStorage_KeyValueStores_Chord.pdf)
 
 
